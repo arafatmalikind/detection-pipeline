@@ -1,0 +1,13 @@
+match:
+  - Image: 'C:\Windows\System32\vssadmin.exe'
+    CommandLine: 'vssadmin.exe Delete Shadows /All /Quiet'
+  - Image: 'C:\Windows\System32\wbem\WMIC.exe'
+    CommandLine: 'wmic shadowcopy delete'
+  - Image: 'C:\Windows\System32\vssadmin.exe'
+    CommandLine: 'vssadmin resize shadowstorage /for=c: /on=c: /maxsize=401MB'
+
+no_match:
+  - Image: 'C:\Windows\System32\vssadmin.exe'
+    CommandLine: 'vssadmin list shadows'
+  - Image: 'C:\Windows\System32\vssadmin.exe'
+    CommandLine: 'vssadmin resize shadowstorage /for=c: /on=c: /maxsize=20%'

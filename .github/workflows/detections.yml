@@ -1,0 +1,36 @@
+name: detections
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt pytest
+
+      - name: Engine unit tests
+        run: pytest -q
+
+      - name: Lint rules
+        run: python -m detlab lint
+
+      - name: Run rules against test events
+        run: python -m detlab test
+
+      - name: Converted queries are up to date
+        run: |
+          rm -rf queries
+          python -m detlab convert spl -o queries
+          python -m detlab convert kql -o queries
+          git diff --exit-code queries || { echo "run 'make queries' and commit the result"; exit 1; }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queries
+          path: queries/

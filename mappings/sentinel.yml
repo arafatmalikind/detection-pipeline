@@ -1,0 +1,39 @@
+logsources:
+  windows:process_creation:
+    table: DeviceProcessEvents
+    fields:
+      Image: FolderPath
+      CommandLine: ProcessCommandLine
+      ParentImage: InitiatingProcessFolderPath
+      ParentCommandLine: InitiatingProcessCommandLine
+      User: AccountName
+      OriginalFileName: ProcessVersionInfoOriginalFileName
+    suffix: "| project Timestamp, DeviceName, AccountName, InitiatingProcessFolderPath, FolderPath, ProcessCommandLine"
+
+  windows:process_access:
+    table: DeviceEvents
+    fields:
+      SourceImage: InitiatingProcessFolderPath
+      TargetImage: FileName
+      GrantedAccess: AdditionalFields
+    suffix: "| where ActionType == \"OpenProcessApiCall\""
+
+  windows:system:
+    table: Event
+    fields:
+      EventID: EventID
+      ImagePath: RenderedDescription
+      ServiceName: RenderedDescription
+      Provider_Name: Source
+
+  azure:signinlogs:
+    table: SigninLogs
+    suffix: "| summarize count(), make_set(IPAddress) by UserPrincipalName, ClientAppUsed"
+
+  zeek:modbus:
+    table: ZeekModbus_CL
+    fields:
+      id.orig_h: id_orig_h_s
+      id.resp_h: id_resp_h_s
+      func: func_s
+    suffix: "| summarize count(), make_set(func_s) by id_orig_h_s, id_resp_h_s"

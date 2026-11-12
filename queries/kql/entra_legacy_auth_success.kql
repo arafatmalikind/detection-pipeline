@@ -1,0 +1,4 @@
+// Successful sign-in using legacy authentication [d4826e81-3461-4ef5-8a5a-5cc901a3c4da]
+SigninLogs
+| where (ClientAppUsed in~ ("Exchange ActiveSync", "IMAP4", "POP3", "Authenticated SMTP", "Exchange Web Services", "Other clients", "MAPI Over HTTP")) and (ResultType =~ "0")
+| summarize count(), make_set(IPAddress) by UserPrincipalName, ClientAppUsed

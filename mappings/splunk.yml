@@ -1,0 +1,33 @@
+# logsource key is product:category:service (empty parts dropped)
+# prefix is prepended to the converted condition.
+# Adjust index names to your environment.
+
+logsources:
+  windows:process_creation:
+    prefix: index=windows sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1
+    suffix: "| table _time host User ParentImage Image CommandLine"
+
+  windows:process_access:
+    prefix: index=windows sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=10
+    suffix: "| table _time host SourceImage TargetImage GrantedAccess CallTrace"
+
+  windows:system:
+    prefix: index=windows sourcetype="XmlWinEventLog:System"
+    fields:
+      EventID: EventCode
+    suffix: "| table _time host ServiceName ImagePath AccountName"
+
+  azure:signinlogs:
+    prefix: index=azure sourcetype="azure:monitor:aad" category=SignInLogs
+    fields:
+      ClientAppUsed: properties.clientAppUsed
+      ResultType: properties.status.errorCode
+      UserPrincipalName: properties.userPrincipalName
+    suffix: "| stats count values(properties.ipAddress) as src by properties.userPrincipalName properties.clientAppUsed"
+
+  zeek:modbus:
+    prefix: index=ot sourcetype="zeek:modbus"
+    fields:
+      id.orig_h: src_ip
+      id.resp_h: dest_ip
+    suffix: "| stats count values(func) as functions by src_ip dest_ip"

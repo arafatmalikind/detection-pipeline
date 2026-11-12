@@ -1,0 +1,36 @@
+title: Volume shadow copies deleted
+id: c022fe77-0c73-43c3-9fbb-d2ab44bc02a1
+status: stable
+description: |
+  Shadow copy deletion via vssadmin or wmic, a usual step right before
+  ransomware encryption. On OT engineering workstations and historians this
+  should never happen outside a change window.
+author: Arafat Malik
+date: 2026-04-02
+tags:
+  - attack.impact
+  - attack.t1490
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  vssadmin:
+    Image|endswith: '\vssadmin.exe'
+    CommandLine|contains|all:
+      - 'delete'
+      - 'shadows'
+  wmic:
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains|all:
+      - 'shadowcopy'
+      - 'delete'
+  resize:
+    Image|endswith: '\vssadmin.exe'
+    CommandLine|contains|all:
+      - 'resize'
+      - 'shadowstorage'
+      - 'maxsize=401mb'
+  condition: 1 of them
+falsepositives:
+  - Backup software housekeeping (check the parent process)
+level: high

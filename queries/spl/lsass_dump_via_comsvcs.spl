@@ -1,0 +1,3 @@
+``` LSASS memory dump through comsvcs.dll [2958ad87-7756-4f2d-bb99-3b095aef7eb4] ```
+index=windows sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1 ((CommandLine="*comsvcs*" CommandLine="*minidump*") OR (Image="*\\rundll32.exe" (CommandLine="*#24*" OR CommandLine="*#+24*" OR CommandLine="*#-4294967272*")))
+| table _time host User ParentImage Image CommandLine

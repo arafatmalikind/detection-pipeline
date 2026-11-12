@@ -1,0 +1,15 @@
+match:
+  - UserPrincipalName: 'j.doe@example.com'
+    ClientAppUsed: 'IMAP4'
+    ResultType: 0
+  - UserPrincipalName: 'scanner01@example.com'
+    ClientAppUsed: 'Authenticated SMTP'
+    ResultType: '0'
+
+no_match:
+  - UserPrincipalName: 'j.doe@example.com'
+    ClientAppUsed: 'IMAP4'
+    ResultType: 50126
+  - UserPrincipalName: 'j.doe@example.com'
+    ClientAppUsed: 'Browser'
+    ResultType: 0

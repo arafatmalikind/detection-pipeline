@@ -1,0 +1,31 @@
+title: Service installed from a user-writable path
+id: b74828aa-bb19-49bb-8755-46a4af7f5743
+status: test
+description: |
+  New Windows service (7045) whose binary lives somewhere any user can write.
+  Persistence and lateral movement tools (PsExec clones, Cobalt Strike style
+  service exec) tend to drop here.
+author: Arafat Malik
+date: 2026-05-11
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1543.003
+logsource:
+  product: windows
+  service: system
+detection:
+  install:
+    EventID: 7045
+    ImagePath|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\Users\Public\'
+      - '\ProgramData\'
+      - '\PerfLogs\'
+  defender:
+    ImagePath|contains: '\ProgramData\Microsoft\Windows Defender\'
+  condition: install and not defender
+falsepositives:
+  - Some vendor updaters install temporary services from ProgramData
+level: medium

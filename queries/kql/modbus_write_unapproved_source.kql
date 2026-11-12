@@ -1,0 +1,4 @@
+// Modbus write from a host that is not an engineering workstation [e782a1ed-9310-4e38-baaf-3e14864527bc]
+ZeekModbus_CL
+| where (func_s in~ ("WRITE_SINGLE_COIL", "WRITE_SINGLE_REGISTER", "WRITE_MULTIPLE_COILS", "WRITE_MULTIPLE_REGISTERS", "MASK_WRITE_REGISTER", "READ_WRITE_MULTIPLE_REGISTERS", "WRITE_FILE_RECORD")) and (not((id_orig_h_s in~ ("192.0.2.10", "192.0.2.11", "192.0.2.21"))))
+| summarize count(), make_set(func_s) by id_orig_h_s, id_resp_h_s

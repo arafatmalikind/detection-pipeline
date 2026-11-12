@@ -1,0 +1,17 @@
+match:
+  - EventID: 7045
+    ServiceName: 'UpdSvc'
+    ImagePath: 'C:\Users\Public\svc.exe'
+  - EventID: 7045
+    ServiceName: 'xQm1'
+    ImagePath: '%COMSPEC% /c C:\Windows\Temp\a.bat'
+
+no_match:
+  - EventID: 7045
+    ServiceName: 'WinDefend'
+    ImagePath: 'C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.24090.11-0\MsMpEng.exe'
+  - EventID: 7045
+    ServiceName: 'Splunkd'
+    ImagePath: 'C:\Program Files\Splunk\bin\splunkd.exe'
+  - EventID: 7036
+    ImagePath: 'C:\Users\Public\svc.exe'

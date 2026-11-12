@@ -1,0 +1,37 @@
+title: Modbus write from a host that is not an engineering workstation
+id: e782a1ed-9310-4e38-baaf-3e14864527bc
+status: test
+description: |
+  Any Modbus function that changes coils or registers, sent from a source that
+  is not in the approved engineering/HMI list. Reads are ignored. Maintain the
+  allowlist alongside the asset inventory; the addresses below are placeholders
+  from the documentation range.
+author: Arafat Malik
+date: 2026-06-19
+modified: 2026-09-07
+tags:
+  - attack.ics.impair_process_control
+  - attack.t0855
+  - attack.t0836
+logsource:
+  product: zeek
+  service: modbus
+detection:
+  write:
+    func:
+      - 'WRITE_SINGLE_COIL'
+      - 'WRITE_SINGLE_REGISTER'
+      - 'WRITE_MULTIPLE_COILS'
+      - 'WRITE_MULTIPLE_REGISTERS'
+      - 'MASK_WRITE_REGISTER'
+      - 'READ_WRITE_MULTIPLE_REGISTERS'
+      - 'WRITE_FILE_RECORD'
+  approved:
+    id.orig_h:
+      - '192.0.2.10'
+      - '192.0.2.11'
+      - '192.0.2.21'
+  condition: write and not approved
+falsepositives:
+  - New HMI or engineering laptop not yet added to the allowlist
+level: high

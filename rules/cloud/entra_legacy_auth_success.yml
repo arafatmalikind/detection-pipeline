@@ -1,0 +1,30 @@
+title: Successful sign-in using legacy authentication
+id: d4826e81-3461-4ef5-8a5a-5cc901a3c4da
+status: stable
+description: |
+  Legacy protocols cannot do MFA, so a successful legacy sign-in usually means
+  a Conditional Access gap. Useful as a hygiene detection while legacy auth
+  is being blocked tenant-wide.
+author: Arafat Malik
+date: 2026-05-28
+tags:
+  - attack.initial_access
+  - attack.t1078.004
+logsource:
+  product: azure
+  service: signinlogs
+detection:
+  legacy:
+    ClientAppUsed:
+      - 'Exchange ActiveSync'
+      - 'IMAP4'
+      - 'POP3'
+      - 'Authenticated SMTP'
+      - 'Exchange Web Services'
+      - 'Other clients'
+      - 'MAPI Over HTTP'
+    ResultType: '0'   # string in SigninLogs
+  condition: legacy
+falsepositives:
+  - Multifunction printers using SMTP AUTH (move them to a connector)
+level: medium

@@ -1,0 +1,4 @@
+// Volume shadow copies deleted [c022fe77-0c73-43c3-9fbb-d2ab44bc02a1]
+DeviceProcessEvents
+| where (((FolderPath endswith "\\vssadmin.exe") and (ProcessCommandLine contains "resize" and ProcessCommandLine contains "shadowstorage" and ProcessCommandLine contains "maxsize=401mb")) or ((FolderPath endswith "\\vssadmin.exe") and (ProcessCommandLine contains "delete" and ProcessCommandLine contains "shadows"))) or ((FolderPath endswith "\\wmic.exe") and (ProcessCommandLine contains "shadowcopy" and ProcessCommandLine contains "delete"))
+| project Timestamp, DeviceName, AccountName, InitiatingProcessFolderPath, FolderPath, ProcessCommandLine

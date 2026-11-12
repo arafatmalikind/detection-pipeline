@@ -1,0 +1,3 @@
+``` Modbus write from a host that is not an engineering workstation [e782a1ed-9310-4e38-baaf-3e14864527bc] ```
+index=ot sourcetype="zeek:modbus" ((func="WRITE_SINGLE_COIL" OR func="WRITE_SINGLE_REGISTER" OR func="WRITE_MULTIPLE_COILS" OR func="WRITE_MULTIPLE_REGISTERS" OR func="MASK_WRITE_REGISTER" OR func="READ_WRITE_MULTIPLE_REGISTERS" OR func="WRITE_FILE_RECORD") (NOT (src_ip="192.0.2.10" OR src_ip="192.0.2.11" OR src_ip="192.0.2.21")))
+| stats count values(func) as functions by src_ip dest_ip

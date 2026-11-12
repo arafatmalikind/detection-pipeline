@@ -1,0 +1,15 @@
+match:
+  - id.orig_h: '192.0.2.77'
+    id.resp_h: '192.0.2.200'
+    func: 'WRITE_SINGLE_REGISTER'
+  - id.orig_h: '198.51.100.4'
+    id.resp_h: '192.0.2.201'
+    func: 'WRITE_MULTIPLE_COILS'
+
+no_match:
+  - id.orig_h: '192.0.2.10'
+    id.resp_h: '192.0.2.200'
+    func: 'WRITE_SINGLE_REGISTER'
+  - id.orig_h: '192.0.2.77'
+    id.resp_h: '192.0.2.200'
+    func: 'READ_HOLDING_REGISTERS'

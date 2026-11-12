@@ -1,0 +1,3 @@
+// Service installed from a user-writable path [b74828aa-bb19-49bb-8755-46a4af7f5743]
+Event
+| where ((EventID == 7045) and (RenderedDescription contains "\\AppData\\" or RenderedDescription contains "\\Temp\\" or RenderedDescription contains "\\Users\\Public\\" or RenderedDescription contains "\\ProgramData\\" or RenderedDescription contains "\\PerfLogs\\")) and (not((RenderedDescription contains "\\ProgramData\\Microsoft\\Windows Defender\\")))

@@ -1,0 +1,4 @@
+// LSASS memory dump through comsvcs.dll [2958ad87-7756-4f2d-bb99-3b095aef7eb4]
+DeviceProcessEvents
+| where (ProcessCommandLine contains "comsvcs" and ProcessCommandLine contains "minidump") or ((FolderPath endswith "\\rundll32.exe") and (ProcessCommandLine contains "#24" or ProcessCommandLine contains "#+24" or ProcessCommandLine contains "#-4294967272"))
+| project Timestamp, DeviceName, AccountName, InitiatingProcessFolderPath, FolderPath, ProcessCommandLine

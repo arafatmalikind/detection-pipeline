@@ -1,0 +1,4 @@
+// Office application spawns a script interpreter [d2407ea3-c825-4340-9f60-9b065d008f8e]
+DeviceProcessEvents
+| where (InitiatingProcessFolderPath endswith "\\winword.exe" or InitiatingProcessFolderPath endswith "\\excel.exe" or InitiatingProcessFolderPath endswith "\\powerpnt.exe" or InitiatingProcessFolderPath endswith "\\outlook.exe") and (FolderPath endswith "\\powershell.exe" or FolderPath endswith "\\pwsh.exe" or FolderPath endswith "\\cmd.exe" or FolderPath endswith "\\wscript.exe" or FolderPath endswith "\\cscript.exe" or FolderPath endswith "\\mshta.exe")
+| project Timestamp, DeviceName, AccountName, InitiatingProcessFolderPath, FolderPath, ProcessCommandLine

@@ -1,0 +1,11 @@
+match:
+  - Image: 'C:\Windows\System32\rundll32.exe'
+    CommandLine: 'rundll32.exe C:\windows\System32\comsvcs.dll, MiniDump 624 C:\temp\l.dmp full'
+  - Image: 'C:\Windows\System32\rundll32.exe'
+    CommandLine: 'rundll32 C:\Windows\System32\comsvcs.dll #24 624 C:\temp\out.bin full'
+
+no_match:
+  - Image: 'C:\Windows\System32\rundll32.exe'
+    CommandLine: 'rundll32.exe shell32.dll,Control_RunDLL desk.cpl'
+  - Image: 'C:\Windows\System32\regsvr32.exe'
+    CommandLine: 'regsvr32 /s comsvcs.dll'
